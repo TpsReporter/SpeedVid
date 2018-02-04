@@ -12,13 +12,13 @@ Quick Start (Chrome):
 7. Open the SpeedVid bookmark
 8. Use the Following keys with Ctrl+Shift to manipulate playback:
 
-  O - play
-  P - pause
-  [ - skip back 5 seconds
-  ] - skip ahead 5 seconds
-  0 - reset speed to 1.0x
-  - - decrease current speed by a factor of 1.1
-  + - increase current speed by a factor of 1.1
+  - "O" play
+  - "P" pause
+  - "[" skip back 5 seconds
+  - "]" skip ahead 5 seconds
+  - "0" reset speed to 1.0x
+  - "-" decrease current speed by a factor of 1.1
+  - "+" increase current speed by a factor of 1.1
   
 Audio tends to crap out below .5x and above 4.0x.
 If you don't like JQuery use the noJQ version (you loose the tooltips though).
