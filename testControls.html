@@ -1,0 +1,204 @@
+<html><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+  <style type="text/css">
+    
+#out {
+
+  margin: 20px;
+
+}
+  </style>
+
+  <title>Speed Vid Test Page</title>
+
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+ -->
+<script type="text/javascript">//<![CDATA[
+//=====THIS FILE IS AN EASIER-TO-DEBUG TESTBED 
+//============== PASTE SECTION BELOW INTO BOOKMARKLET ONCE DEBUGGED - DON'T FORGET YOU'RE SEMICOLONS
+
+var reqs = [
+  "https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js",
+  "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+];
+
+function keyDownForVideo(e) {
+ 
+  if(!(e.shiftKey && e.ctrlKey)){
+    return;
+  }
+  
+  switch(e.key) {
+    case "+":
+    case "=":
+      onPlus();
+      break;
+      
+    case "-":
+    case "_":
+      onMinus();
+      break;
+
+    case ")":
+    case "0":
+      onZero();
+      break;
+
+
+    case "}":
+    case "]":
+      onRightBracket();
+      break;
+
+
+    case "{":
+    case "[":
+      onLeftBracket();
+      break;
+
+    case "p":
+    case "P":
+      onPause();
+      break;
+
+    case "o":
+    case "O":
+      onPlay();
+      break;
+
+  }
+  
+}
+
+function vid() {
+  return document.getElementsByTagName("video")[0] || {};
+}
+
+function precision(n, p) {
+  p = p || 0;
+  return Math.round(n * Math.pow(10, p)) / Math.pow(10, p);
+}
+
+function timeStr(seconds) {
+  var d = moment.duration(seconds, "seconds");
+  return moment.utc(d.asMilliseconds()).format("H:mm:ss.SS");
+}
+
+function log(msg, subTitle){
+  /*var out = document.getElementById("out");
+  out.innerText = msg;*/
+  console.log(msg);
+  toastr.remove();
+  toastr.options.closeDuration = 100;
+  toastr.options.timeOut = 300; 
+  toastr.options.extendedTimeOut = 1000; 
+  toastr.info(msg, "Speed Vid" + (subTitle ? " - " + subTitle : ""));
+}
+
+const speedStep = 1.1;
+const valuePrecision = 2;
+
+function onPlus() {
+  vid().playbackRate *= speedStep;
+  vid().playbackRate = precision(vid().playbackRate, valuePrecision);
+  log(vid().playbackRate, "speed");
+}
+
+function onMinus() {
+  vid().playbackRate /= speedStep;
+  vid().playbackRate = precision(vid().playbackRate, valuePrecision);
+  log(vid().playbackRate, "speed");
+}
+
+function onZero() {
+  vid().playbackRate = 1;
+  log(vid().playbackRate, "speed");
+}
+
+function onLeftBracket() {
+  vid().currentTime -= 5;
+  log(timeStr(vid().currentTime), "time");
+}
+
+function onRightBracket() {
+  vid().currentTime += 5;
+  log(timeStr(vid().currentTime), "time");
+}
+
+function onPause() {
+  vid().pause();
+  log(timeStr(vid().currentTime), "paused at");
+}
+
+function onPlay() {
+  vid().play();
+  log(timeStr(vid().currentTime), "resumed at");
+}
+
+function loadSpeedVid() {
+  var l = document.createElement("link");
+  l.href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css";
+  l.rel="stylesheet";
+  document.body.appendChild(l);
+
+  loadReqs();
+}
+
+function loadReqs() {
+  if(reqs.length) {
+    var req = reqs.pop();
+    var s = document.createElement("script");
+    s.src = req;
+
+    if (s.addEventListener) {
+        s.addEventListener("load", loadReqs, false);
+    } else if (s.readyState) {
+        s.onreadystatechange = loadReqs;
+    }
+    document.body.appendChild(s);
+  } else {
+    loadMain();
+  }
+}
+
+function loadMain() {
+  document.addEventListener("keydown", keyDownForVideo, false);
+  log("Speed Vid - loaded");
+}
+
+//============== END OF - "PASTE SECTION .. INTO BOOKMARKLET...
+
+window.onload=function(){
+  loadSpeedVid();
+}
+//]]> 
+
+</script>
+
+  
+</head>
+
+<body>
+
+  <h1>Speed Vid Test Page</h1>
+  
+<div id="out">
+
+  hello
+
+</div>
+  
+<video tabindex="-1" 
+  class="video-stream html5-main-video"
+   
+  style="width: 640px; height: 360px; left: 0px; top: 0px;" 
+  src="https://archive.org/download/TheFastandtheFuriousJohnIreland1954goofyrip/TheFastandtheFuriousJohnIreland1954goofyrip_512kb.mp4">
+</video>
+
+
+</body></html>
